@@ -1,0 +1,24 @@
+## The position of the first date in the list before the given date
+find_begin_position <- function (dates, d) {
+    Position(function(x) d > x, dates)
+}
+
+## The first date in the list before the given date
+find_begin <- function (dates, d) {
+    dates[[find_begin_position(dates, d)]]
+}
+
+## The position of the first date in the list after the given date
+find_end_position <- function (dates, d) {
+    Position(function(x) d < x, dates)
+}
+
+## The first date in the list after the given date
+find_end <- function (dates, d) {
+    dates[[find_end_position(dates, d)]]
+}
+
+# The proportion of time elapsed to current in the interval (start, end)
+proportion_elapsed <- function(start, current, end) {
+    as.duration(interval(start, current)) / as.duration(interval(start, end))
+}

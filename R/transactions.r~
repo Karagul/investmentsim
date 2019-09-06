@@ -1,0 +1,15 @@
+### Transactions
+## Time -> Amount
+
+## No contributions. No withdrawals
+no_transactions <- function(date) 0
+
+make_transaction_on_date <- function (amount, on_date) {
+    function (date) ifelse(date == on_date,
+                           amount,
+                           0)
+}
+
+make_constant_yearly_transaction <- function(amount) {
+    stop("TODO")
+}
