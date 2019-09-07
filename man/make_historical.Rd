@@ -9,6 +9,9 @@ make_historical(ts)
 \arguments{
 \item{ts}{an \code{xts} time-series of absolute returns}
 }
+\value{
+an \code{asset} object for the time-series
+}
 \description{
 Make an asset from a time series of absolute (ordinary) returns
 }

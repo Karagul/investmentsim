@@ -7,7 +7,10 @@
 make_relative_returns(x)
 }
 \arguments{
-\item{x}{A vector of prices}
+\item{x}{a vector of prices}
+}
+\value{
+a vector of relative (log) returns
 }
 \description{
 Computes the relative returns of an asset given its prices over

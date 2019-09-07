@@ -9,6 +9,9 @@ make_relative_historical(ts)
 \arguments{
 \item{ts}{an \code{xts} time-series of relative returns}
 }
+\value{
+an \code{asset} object for the time series
+}
 \description{
 Make an asset from a time series of relative (log) returns
 }

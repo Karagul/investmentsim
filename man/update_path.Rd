@@ -2,10 +2,25 @@
 % Please edit documentation in R/financial-path.R
 \name{update_path}
 \alias{update_path}
-\title{Sets values in the financial path}
+\title{Set values in a financial path}
 \usage{
 update_path(path, date, portfolio, trans, return)
 }
+\arguments{
+\item{path}{the financial path}
+
+\item{date}{the date on which the set the values in the time-series}
+
+\item{portfolio}{the portfolio holding the assets}
+
+\item{trans}{the transaction occuring at the end of that period}
+
+\item{return}{the return over that period}
+}
+\value{
+an updated financial path
+}
 \description{
-Sets values in the financial path
+In a given financial path, sets current values for each asset, the
+total value, the transaction, and the return for that date.
 }

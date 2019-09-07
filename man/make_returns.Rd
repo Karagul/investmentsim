@@ -9,7 +9,10 @@ An Asset has type: Time -> Time -> Return}
 make_returns(x)
 }
 \arguments{
-\item{x}{A time-series of prices}
+\item{x}{a vector of prices}
+}
+\value{
+a vector of absolute returns
 }
 \description{
 An asset is identified with an accumulator. It takes an increment and

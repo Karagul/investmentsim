@@ -9,6 +9,9 @@ make_bootstrap_historical(ts, block_size = 5)
 \arguments{
 \item{ts}{an \code{xts} time-series of absolute returns}
 }
+\value{
+a time series of returns with the same length as \code{ts}
+}
 \description{
 Creates a time-series of returns sampled from historical data, with
 the sampling respecting time dependence.
