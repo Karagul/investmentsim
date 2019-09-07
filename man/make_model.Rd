@@ -7,11 +7,11 @@
 make_model(portfolio, allocations, transactions, dates)
 }
 \arguments{
-\item{portfolio}{A \code{portfolio} object}
+\item{portfolio}{a \code{portfolio} object}
 
-\item{allocations}{An \code{allocation} object}
+\item{allocations}{an \code{allocation} object}
 
-\item{transactions}{A \code{transaction} object}
+\item{transactions}{a \code{transaction} object}
 
 \item{dates}{A vector of dates over which the model should be
 simulated.}

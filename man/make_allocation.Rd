@@ -4,7 +4,16 @@
 \alias{make_allocation}
 \title{Create a portfolio allocation path}
 \usage{
-make_allocation(asset_names, percents)
+make_allocation(asset_names, asset_percents)
+}
+\arguments{
+\item{asset_names}{a vector of strings identifying each holding}
+
+\item{asset_percents}{a vector of numbers between 0 and 1 identifying the
+percentage desired of each holding}
+}
+\value{
+an allocation path object
 }
 \description{
 Create a portfolio allocation path

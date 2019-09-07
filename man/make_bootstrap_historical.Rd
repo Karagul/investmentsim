@@ -8,6 +8,8 @@ make_bootstrap_historical(ts, block_size = 5)
 }
 \arguments{
 \item{ts}{an \code{xts} time-series of absolute returns}
+
+\item{block_size}{the size of the continguous blocks to sample}
 }
 \value{
 a time series of returns with the same length as \code{ts}

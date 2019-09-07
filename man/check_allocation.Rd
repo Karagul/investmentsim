@@ -6,6 +6,12 @@
 \usage{
 check_allocation(percents)
 }
+\arguments{
+\item{percents}{a vector of percents to check}
+}
+\value{
+a boolean indicating if the percents in fact do sum to 1.0
+}
 \description{
 Check that allocation percents sum to 1.0
 }

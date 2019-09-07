@@ -1,31 +1,66 @@
 ### Internal utility functions
 
 ### Dates
+#' Find a Date's Position in a List
+#' 
 #' The position of the first date in the list before the given date
+#'
+#' @param dates a list of dates
+#' @param d the reference date
+#' @param right whether to check from the right of the given date
+#' @return the position of the date found
 #' @export
 find_begin_position <- function (dates, d, right=FALSE) {
     Position(function(x) d > x, dates, right)
 }
 
+#' Find a Date in a List
+#'
 #' The first date in the list before the given date
+#'
+#' @param dates a list of dates
+#' @param d the reference date
+#' @param right whether to check from the right of the given date
+#' @return the date found
 #' @export
 find_begin <- function (dates, d, right=FALSE) {
     dates[[investmentsim::find_begin_position(dates, d, right)]]
 }
 
+#' Find a Date's Position in a List
+#'
 #' The position of the first date in the list after the given date
+#'
+#' @param dates a list of dates
+#' @param d the reference date
+#' @param right whether to check from the right of the given date
+#' @return the position of the date found
 #' @export
 find_end_position <- function (dates, d, right=FALSE) {
     Position(function(x) d < x, dates, right)
 }
 
+#' Find a Date
+#'
 #' The first date in the list after the given date
+#'
+#' @param dates a list of dates
+#' @param d the reference date
+#' @param right whether to check from the right of the given date
+#' @return the position of the date found
 #' @export
 find_end <- function (dates, d, right=FALSE) {
     dates[[investmentsim::find_end_position(dates, d, right)]]
 }
 
+#' Find the Proportion of Elapsed Time
+#'
 #' The proportion of time elapsed to current in the interval (start, end)
+#'
+#' @param start the stating date
+#' @param current the current date
+#' @param end the ending date
+#' @return a proportion
 #' @export
 proportion_elapsed <- function(start, current, end) {
     lubridate::as.duration(lubridate::interval(start, current)) / as.duration(interval(start, end))
@@ -79,16 +114,18 @@ make_geom_block_sample <- function(ts, block_size, R) {
 #' @param r_log a logarithmic (relative) return
 #' @param n the number of time periods over which to compute the
 #'     absolute return.
+#' @return an absolute percent return
 #' @export
 relative_to_absolute <- function(r_log, n) n * exp(r_log / n) - n
 
 #' Convert Absolute Returns
 #'
-#' Convert absolute returns to relative returns.
+#' Convert absolute returns to relative (log) returns.
 #'
 #' @param r_n an absolute return over a single time period
 #' @param n the number of time periods over which to compute the
 #'     logarithmic return
+#' @return a relative (log) percent return
 #' @export
 absolute_to_relative <- function(r_n, n) n * log(1 + r_n / n)
 

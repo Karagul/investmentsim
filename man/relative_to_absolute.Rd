@@ -12,6 +12,9 @@ relative_to_absolute(r_log, n)
 \item{n}{the number of time periods over which to compute the
 absolute return.}
 }
+\value{
+an absolute percent return
+}
 \description{
 Convert relative returns to absolute returns.
 }

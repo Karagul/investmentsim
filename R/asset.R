@@ -97,6 +97,7 @@ make_relative_historical <- function (ts) {
 #' the sampling respecting time dependence.
 #' 
 #' @param ts an \code{xts} time-series of absolute returns
+#' @param block_size the size of the continguous blocks to sample
 #' @return a time series of returns with the same length as \code{ts}
 #' @export
 make_bootstrap_historical <- function(ts, block_size=5) {

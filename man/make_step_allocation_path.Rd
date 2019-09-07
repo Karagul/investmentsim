@@ -6,6 +6,19 @@
 \usage{
 make_step_allocation_path(asset_names, change_dates, asset_percents)
 }
+\arguments{
+\item{asset_names}{a vector of strings identifying each holding}
+
+\item{change_dates}{a vector of dates indicating when to change
+allocations}
+
+\item{asset_percents}{a list of vectors of numbers between 0 and 1
+identifying the percentage desired of each holding. See above
+for structure.}
+}
+\value{
+an allocation path object
+}
 \description{
 Give a list of n asset_names, a list of k dates, and k+1 lists of n
 percents, will return an allocation function that changes stepwise

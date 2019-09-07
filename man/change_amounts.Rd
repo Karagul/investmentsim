@@ -2,10 +2,23 @@
 % Please edit documentation in R/portfolios.R
 \name{change_amounts}
 \alias{change_amounts}
-\title{Update a portfolio from a named list of new_amounts}
+\title{Update a portfolio}
 \usage{
 change_amounts(portfolio, changed_amounts, nonneg = TRUE)
 }
+\arguments{
+\item{portfolio}{a portfolio object}
+
+\item{changed_amounts}{a named list indicating to what the balance
+of an asset should be changed}
+
+\item{nonneg}{a boolean indicating if only nonnegative amounts are
+allowed for an asset balance. Use \code{FALSE} to indicate that
+negative values are allowed.}
+}
+\value{
+the updated portfolio
+}
 \description{
-Update a portfolio from a named list of new_amounts
+Updates a portfolio from a named list of new amounts
 }

@@ -2,9 +2,19 @@
 % Please edit documentation in R/util.R
 \name{find_end}
 \alias{find_end}
-\title{The first date in the list after the given date}
+\title{Find a Date}
 \usage{
 find_end(dates, d, right = FALSE)
+}
+\arguments{
+\item{dates}{a list of dates}
+
+\item{d}{the reference date}
+
+\item{right}{whether to check from the right of the given date}
+}
+\value{
+the position of the date found
 }
 \description{
 The first date in the list after the given date

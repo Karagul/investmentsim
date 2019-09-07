@@ -16,11 +16,16 @@ get_amounts(portfolio)
 get_total(portfolio)
 }
 \arguments{
-\item{asset_names}{A vector of strings identifying each holding}
+\item{asset_names}{a vector of strings identifying each holding}
 
-\item{assets}{A vector of \code{asset} objects}
+\item{assets}{a vector of \code{asset} objects}
 
-\item{amounts}{A vector of the dollar amount held for each holding}
+\item{amounts}{a vector of the dollar amount held for each holding}
+
+\item{portfolio}{the portfolio to return information from}
+}
+\value{
+a new \code{portfolio} object
 }
 \description{
 Creates a portfolio of holdings and the amount held.

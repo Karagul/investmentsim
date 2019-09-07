@@ -2,9 +2,19 @@
 % Please edit documentation in R/util.R
 \name{proportion_elapsed}
 \alias{proportion_elapsed}
-\title{The proportion of time elapsed to current in the interval (start, end)}
+\title{Find the Proportion of Elapsed Time}
 \usage{
 proportion_elapsed(start, current, end)
+}
+\arguments{
+\item{start}{the stating date}
+
+\item{current}{the current date}
+
+\item{end}{the ending date}
+}
+\value{
+a proportion
 }
 \description{
 The proportion of time elapsed to current in the interval (start, end)

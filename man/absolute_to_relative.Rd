@@ -12,6 +12,9 @@ absolute_to_relative(r_n, n)
 \item{n}{the number of time periods over which to compute the
 logarithmic return}
 }
+\value{
+a relative (log) percent return
+}
 \description{
-Convert absolute returns to relative returns.
+Convert absolute returns to relative (log) returns.
 }

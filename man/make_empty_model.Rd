@@ -6,6 +6,11 @@
 \usage{
 make_empty_model(portfolio, allocations)
 }
+\arguments{
+\item{portfolio}{a \code{portfolio} object}
+
+\item{allocations}{an \code{allocation} object}
+}
 \description{
 Creates a model containing only a portfolio and an allocation.
 Useful for setting up subsimulations with varying transaction paths

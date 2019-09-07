@@ -2,9 +2,19 @@
 % Please edit documentation in R/util.R
 \name{find_begin_position}
 \alias{find_begin_position}
-\title{The position of the first date in the list before the given date}
+\title{Find a Date's Position in a List}
 \usage{
 find_begin_position(dates, d, right = FALSE)
+}
+\arguments{
+\item{dates}{a list of dates}
+
+\item{d}{the reference date}
+
+\item{right}{whether to check from the right of the given date}
+}
+\value{
+the position of the date found
 }
 \description{
 The position of the first date in the list before the given date

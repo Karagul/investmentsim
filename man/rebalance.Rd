@@ -6,6 +6,20 @@
 \usage{
 rebalance(portfolio, allocation, transaction, nonneg = TRUE)
 }
+\arguments{
+\item{portfolio}{a \code{portfolio} object}
+
+\item{allocation}{an allocation indicating target percents for rebalancing}
+
+\item{transaction}{any transaction to be applied before rebalancing}
+
+\item{nonneg}{a boolean indicating if only nonnegative amounts are
+allowed for an asset balance. Use \code{FALSE} to indicate that
+negative values are allowed.}
+}
+\value{
+the rebalanced portfolio
+}
 \description{
 Rebalance a portfolio according to an allocation while applying any
 additional transactions.

@@ -14,9 +14,9 @@
 #'
 #' Creates a model object for use in financial paths.
 #'
-#' @param portfolio A \code{portfolio} object
-#' @param allocations An \code{allocation} object
-#' @param transactions A \code{transaction} object
+#' @param portfolio a \code{portfolio} object
+#' @param allocations an \code{allocation} object
+#' @param transactions a \code{transaction} object
 #' @param dates A vector of dates over which the model should be
 #'     simulated.
 #' @export
@@ -32,6 +32,8 @@ make_model <- function (portfolio, allocations, transactions, dates) {
 #' Useful for setting up subsimulations with varying transaction paths
 #' and dates.
 #'
+#' @param portfolio a \code{portfolio} object
+#' @param allocations an \code{allocation} object
 #' @export
 make_empty_model <- function(portfolio, allocations) {
     investmentsim::make_model(portfolio, allocations, NA, NA)

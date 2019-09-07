@@ -2,7 +2,9 @@
 ## -----------
 
 #' Check that allocation percents sum to 1.0
-#'
+#' 
+#' @param percents a vector of percents to check
+#' @return a boolean indicating if the percents in fact do sum to 1.0
 #' @export
 check_allocation <- function (percents) {
     if (sum(percents) != 1.0) {
@@ -12,11 +14,15 @@ check_allocation <- function (percents) {
 
 #' Create a portfolio allocation path
 #'
+#' @param asset_names a vector of strings identifying each holding
+#' @param asset_percents a vector of numbers between 0 and 1 identifying the
+#'     percentage desired of each holding
+#' @return an allocation path object
 #' @importFrom magrittr %>%
 #' @export
-make_allocation <- function (asset_names, percents) {
-    investmentsim::check_allocation(percents)
-    a <- percents
+make_allocation <- function (asset_names, asset_percents) {
+    investmentsim::check_allocation(asset_percents)
+    a <- asset_percents
     names(a) <- asset_names
     a %>% unlist
 }
@@ -25,9 +31,13 @@ make_allocation <- function (asset_names, percents) {
 #'
 #' The same allocation, forever.
 #'
+#' @param asset_names a vector of strings identifying each holding
+#' @param asset_percents a vector of numbers between 0 and 1 identifying the
+#'     percentage desired of each holding
+#' @return an allocation path object 
 #' @export
-make_constant_allocation_path <- function (asset_names, percents) {
-    a <- investmentsim::make_allocation(asset_names, percents)
+make_constant_allocation_path <- function (asset_names, asset_percents) {
+    a <- investmentsim::make_allocation(asset_names, asset_percents)
     function (t) a
 }
 
@@ -38,6 +48,13 @@ make_constant_allocation_path <- function (asset_names, percents) {
 #' from one percent to the next on the specified dates. The first
 #' allocation is the beginning, and should not have a date.
 #'
+#' @param asset_names a vector of strings identifying each holding
+#' @param change_dates a vector of dates indicating when to change
+#'     allocations
+#' @param asset_percents a list of vectors of numbers between 0 and 1
+#'     identifying the percentage desired of each holding. See above
+#'     for structure.
+#' @return an allocation path object
 #' @importFrom magrittr %>%
 #' @export
 make_step_allocation_path <- function(asset_names,
@@ -61,6 +78,15 @@ make_step_allocation_path <- function(asset_names,
 #' If a date is given before the first change or after the last
 #' change, it returns a constant allocation.
 #'
+#' @param asset_names a vector of strings identifying each holding
+#' @param asset_percents a list of vectors of numbers between 0 and 1
+#'     identifying the percentage desired of each holding. See above
+#'     for structure.
+#' @param change_dates a vector of dates indicating when to change
+#'     target allocations; these function as the "knots" of the
+#'     interpolation
+#' @return an allocation path object#' @param asset_names names of
+#'     holdings
 #' @importFrom magrittr %>%
 #' @export
 make_linear_allocation_path <- function(asset_names,
