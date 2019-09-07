@@ -85,8 +85,17 @@ make_path <- function(model, nonneg=TRUE, verbose=FALSE) {
 }
 
 
-#' Sets values in the financial path
+#' Set values in a financial path
 #'
+#' In a given financial path, sets current values for each asset, the
+#' total value, the transaction, and the return for that date.
+#'
+#' @param path the financial path
+#' @param date the date on which the set the values in the time-series
+#' @param portfolio the portfolio holding the assets
+#' @param trans the transaction occuring at the end of that period
+#' @param return the return over that period
+#' @return an updated financial path
 #' @export
 update_path <- function(path, date, portfolio, trans, return) {
     asset_names <- names(portfolio)

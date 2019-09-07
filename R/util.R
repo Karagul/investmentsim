@@ -72,9 +72,25 @@ make_geom_block_sample <- function(ts, block_size, R) {
 
 ### Returns
 
-## Convert between relative (log) and absolute (ordinary) returns
+#' Convert Relative Returns
+#'
+#' Convert relative returns to absolute returns.
+#'
+#' @param r_log a logarithmic (relative) return
+#' @param n the number of time periods over which to compute the
+#'     absolute return.
+#' @export
 relative_to_absolute <- function(r_log, n) n * exp(r_log / n) - n
-absolute_to_relative <- function(r_n, n) n * log(1 + r / n)
+
+#' Convert Absolute Returns
+#'
+#' Convert absolute returns to relative returns.
+#'
+#' @param r_n an absolute return over a single time period
+#' @param n the number of time periods over which to compute the
+#'     logarithmic return
+#' @export
+absolute_to_relative <- function(r_n, n) n * log(1 + r_n / n)
 
 
 ### Numerics
