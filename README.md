@@ -1,5 +1,6 @@
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/ryanholbrook/investmentsim.svg?branch=master)](https://travis-ci.org/ryanholbrook/investmentsim)
+[![Codecov test coverage](https://codecov.io/gh/ryanholbrook/investmentsim/branch/master/graph/badge.svg)](https://codecov.io/gh/ryanholbrook/investmentsim?branch=master)
 <!-- badges: end -->
 
 An R package to help with simulating an investment portfolio using either historical or simulated returns. Has support for varying transactional and allocation paths.
