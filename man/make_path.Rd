@@ -34,30 +34,34 @@ allocations.
 library(tidyverse)
 library(zoo)
 library(lubridate)
+library(investmentsim)
+
 ## Create a model and financial path
 
 # Time series of returns
 data(simreturns)
 
 # Historical assets
-simstock_asset <- make_historical(simreturns)
-simbond_asset <- make_historical(simreturns)
-dates <- as_datetime(index(simreturns))
+simstock_asset <- make_historical(simreturns$Stock.Returns)
+simbond_asset <- make_historical(simreturns$Bond.Returns)
+# Be sure dates simulated over are a subset of the dates of the assets.
+dates <- seq(ymd("1940-01-01"), ymd("2010-01-01"), by="years")
 
 # Portfolio with S&P 500 and 10-year T-bonds. Yearly transaction
 # of $1000. Linear allocation.
-holdings <- c("stocks", "bonds")
+holdings <- c("Stocks", "Bonds")
 port <- make_portfolio(holdings,
                        c(simstock_asset,
                          simbond_asset),
                          c(0,0))
 alloc <- make_linear_allocation_path(holdings,
-                                    c(ymd("1990-01-01"), ymd("2000-01-01")),
-                                    list(c(0.9, 0.1), c(0.6, 0.4)))
+                                    c(ymd("1990-01-01"), ymd("2015-01-01")),
+                                    list(c(0.9, 0.1), c(0.4, 0.6)))
 trans <- make_transactions_on_dates(rep(1000, length(dates)),
                                     dates)
 model <- make_model(port, alloc, trans, dates)
-
 # Evaluate the model
 path <- make_path(model)
+print(path)
+plot(path)
 }

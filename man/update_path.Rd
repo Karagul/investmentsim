@@ -4,7 +4,7 @@
 \alias{update_path}
 \title{Set values in a financial path}
 \usage{
-update_path(path, date, portfolio, trans, return)
+update_path(path, date, portfolio, trans)
 }
 \arguments{
 \item{path}{the financial path}
@@ -14,8 +14,6 @@ update_path(path, date, portfolio, trans, return)
 \item{portfolio}{the portfolio holding the assets}
 
 \item{trans}{the transaction occuring at the end of that period}
-
-\item{return}{the return over that period}
 }
 \value{
 an updated financial path
