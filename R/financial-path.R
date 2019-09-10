@@ -63,7 +63,7 @@ make_path <- function(model, nonneg=TRUE, verbose=FALSE) {
     path <- xts::xts(matrix(,
                        nrow=length(dates),
                        ncol=length(asset_names) + 2,
-                       dimnames=list(c(), c(asset_names, "total", "trans")),
+                       dimnames=list(c(), c(asset_names, "Total", "Transaction")),
                        ),
                 order.by = dates)
     path <- investmentsim::update_path(path, dates[[1]], portfolio, 0)
@@ -105,7 +105,7 @@ update_path <- function(path, date, portfolio, trans) {
     for (name in asset_names) {
         path[date, name] <- portfolio[[name]][[2]]
     }
-    path[date, "total"] <- investmentsim::get_total(portfolio)
-    path[date, "trans"] <- trans
+    path[date, "Total"] <- investmentsim::get_total(portfolio)
+    path[date, "Transaction"] <- trans
     path
 }
