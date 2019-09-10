@@ -21,32 +21,36 @@
 #' library(tidyverse)
 #' library(zoo)
 #' library(lubridate)
+#' library(investmentsim)
+#'
 #' ## Create a model and financial path
 #' 
 #' # Time series of returns
 #' data(simreturns)
 #' 
 #' # Historical assets
-#' simstock_asset <- make_historical(simreturns)
-#' simbond_asset <- make_historical(simreturns)
-#' dates <- as_datetime(index(simreturns))
-#'
+#' simstock_asset <- make_historical(simreturns$Stock.Returns)
+#' simbond_asset <- make_historical(simreturns$Bond.Returns)
+#' # Be sure dates simulated over are a subset of the dates of the assets.
+#' dates <- seq(ymd("1940-01-01"), ymd("2010-01-01"), by="years")
+#' 
 #' # Portfolio with S&P 500 and 10-year T-bonds. Yearly transaction
 #' # of $1000. Linear allocation.
-#' holdings <- c("stocks", "bonds")
+#' holdings <- c("Stocks", "Bonds")
 #' port <- make_portfolio(holdings,
 #'                        c(simstock_asset,
 #'                          simbond_asset),
 #'                          c(0,0))
 #' alloc <- make_linear_allocation_path(holdings,
-#'                                     c(ymd("1990-01-01"), ymd("2000-01-01")),
-#'                                     list(c(0.9, 0.1), c(0.6, 0.4)))
+#'                                     c(ymd("1990-01-01"), ymd("2015-01-01")),
+#'                                     list(c(0.9, 0.1), c(0.4, 0.6)))
 #' trans <- make_transactions_on_dates(rep(1000, length(dates)),
 #'                                     dates)
 #' model <- make_model(port, alloc, trans, dates)
-#'
 #' # Evaluate the model
 #' path <- make_path(model)
+#' print(path)
+#' plot(path)
 #' @importFrom magrittr %>%
 #' @export
 make_path <- function(model, nonneg=TRUE, verbose=FALSE) {
@@ -58,11 +62,11 @@ make_path <- function(model, nonneg=TRUE, verbose=FALSE) {
     ## Allocate an empty path and set its starting values
     path <- xts::xts(matrix(,
                        nrow=length(dates),
-                       ncol=length(asset_names) + 3,
-                       dimnames=list(c(), c(asset_names, "total", "trans", "return")),
+                       ncol=length(asset_names) + 2,
+                       dimnames=list(c(), c(asset_names, "total", "trans")),
                        ),
                 order.by = dates)
-    path <- investmentsim::update_path(path, dates[[1]], portfolio, 0, 0)
+    path <- investmentsim::update_path(path, dates[[1]], portfolio, 0)
     ## Step through the list of dates, accumulate returns,
     ## apply transactions, and rebalance
     start_dates <- head(dates, -1)
@@ -73,13 +77,13 @@ make_path <- function(model, nonneg=TRUE, verbose=FALSE) {
         for (name in asset_names) {
             asset <- portfolio[[name]][[1]]
             old_amount <- portfolio[[name]][[2]]
-            new_amount <- old_amount*asset(start, end)
+            new_amount <- old_amount * asset(start, end)
             portfolio[[name]][[2]] <- new_amount
         }
         trans <- transactions(end)
         alloc <- allocations(end)
         portfolio <- investmentsim::rebalance(portfolio, alloc, trans, nonneg)
-        path <- investmentsim::update_path(path, end, portfolio, trans, 0)
+        path <- investmentsim::update_path(path, end, portfolio, trans)
     }
     path
 }
@@ -94,16 +98,14 @@ make_path <- function(model, nonneg=TRUE, verbose=FALSE) {
 #' @param date the date on which the set the values in the time-series
 #' @param portfolio the portfolio holding the assets
 #' @param trans the transaction occuring at the end of that period
-#' @param return the return over that period
 #' @return an updated financial path
 #' @export
-update_path <- function(path, date, portfolio, trans, return) {
+update_path <- function(path, date, portfolio, trans) {
     asset_names <- names(portfolio)
     for (name in asset_names) {
         path[date, name] <- portfolio[[name]][[2]]
     }
     path[date, "total"] <- investmentsim::get_total(portfolio)
     path[date, "trans"] <- trans
-    path[date, "return"] <- return
     path
 }
