@@ -62,6 +62,9 @@ alloc <- make_linear_allocation_path(asset_names,
                                       ymd("2000-01-01")),
                                     list(c(0.9, 0.1),
                                          c(0.4, 0.6)))
+```
+
+``` r
 # Plot the allocation path
 as <- map(dates,
           alloc) %>%
@@ -70,11 +73,6 @@ as <- map(dates,
 plot(as, ylim = c(0, 1),
      col = c("red", "blue"),
      main = "Asset Allocation")
-```
-
-<img src="man/figures/README-example-1.png" width="100%" />
-
-``` r
 addLegend("topright",
           asset_names,
           col = c("red", "blue"),
@@ -82,14 +80,16 @@ addLegend("topright",
           bty = "o")
 ```
 
-<img src="man/figures/README-example-2.png" width="100%" />
+<img src="man/figures/README-allocation_path-1.png" width="100%" />
 
 ``` r
 
 trans <- make_transactions_on_dates(rep(1000, length(dates)),
                                     dates)
 model <- make_model(port, alloc, trans, dates)
+```
 
+``` r
 # Evaluate the model
 path <- make_path(model)
 print(c(head(path), tail(path)))
@@ -109,11 +109,6 @@ print(c(head(path), tail(path)))
 plot(path[,1:3],
     col = c("red", "blue", "green"),
     main = "Investment Path")
-```
-
-<img src="man/figures/README-example-3.png" width="100%" />
-
-``` r
 addLegend("topleft",
           c(asset_names, "Total"),
           col = c("red", "blue", "green"),
@@ -121,4 +116,4 @@ addLegend("topleft",
           bty = "o")
 ```
 
-<img src="man/figures/README-example-4.png" width="100%" />
+<img src="man/figures/README-results,-1.png" width="100%" />

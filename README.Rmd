@@ -63,6 +63,9 @@ alloc <- make_linear_allocation_path(asset_names,
                                       ymd("2000-01-01")),
                                     list(c(0.9, 0.1),
                                          c(0.4, 0.6)))
+```
+
+```{r allocation_path, fig.dim = c(7, 5), fig.keep = "last"}
 # Plot the allocation path
 as <- map(dates,
           alloc) %>%
@@ -80,7 +83,9 @@ addLegend("topright",
 trans <- make_transactions_on_dates(rep(1000, length(dates)),
                                     dates)
 model <- make_model(port, alloc, trans, dates)
+```
 
+```{r results,, fig.dim = c(7, 5), fig.keep = "last"}
 # Evaluate the model
 path <- make_path(model)
 print(c(head(path), tail(path)))
