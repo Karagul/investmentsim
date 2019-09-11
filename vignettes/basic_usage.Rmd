@@ -34,21 +34,21 @@ library(investmentsim)
 
 First let's create a portfolio. The `simreturns` data contains an `xts` time-series with fictional yearly returns for a stock fund and a bond fund over the years 1928 to 2018.
 
-```{r}
+```{r simreturns}
 data(simreturns)
 head(simreturns)
 ```
 
 An `asset` in the `investmentsim` package is a function with parameters `start` and `end` that returns the percent change in the asset over the dates from `start` to `end`. The `make_historical` function will construct an asset given a time-series of returns. This function is supposed to be used when you want to use predetermined data as opposed to something generated at runtime.
 
-```{r}
+```{r assets}
 simstock_asset <- make_historical(simreturns$Stock.Returns)
 simbond_asset <- make_historical(simreturns$Bond.Returns)
 ```
 
 Next we define a portfolio with the `make_portfolio` function. It takes a list of names for the assets together with the functions defining them and a list for their initial balances. Also, let's define a sequences of dates over which we'll run the simulation.
 
-```{r}
+```{r portfolio}
 asset_names <- c("Stocks", "Bonds")
 port <- make_portfolio(asset_names,
                        c(simstock_asset,
@@ -59,7 +59,7 @@ dates <- seq(ymd("1940-01-01"), ymd("2010-01-01"), by="years")
 
 Then we can define our desired allocations with `make_linear_allocation`. It needs a list of dates and also a list of percentages for each asset.
 
-```{r}
+```{r allocations}
 alloc <- make_linear_allocation_path(asset_names,
                                      c(ymd("1970-01-01"),
                                        ymd("2000-01-01")),
@@ -69,7 +69,7 @@ alloc <- make_linear_allocation_path(asset_names,
 
 It's easiest to see how it works by looking at a graph.
 
-```{r, fig.dim = c(7, 5), fig.keep = "last"}
+```{r allocation_path, fig.dim = c(7, 5), fig.keep = "last"}
 as <- map(dates,
           alloc) %>%
     do.call(rbind, .) %>%
@@ -87,7 +87,7 @@ addLegend("topright",
 
 Finally, we can define our desired transactions and collect everything together in a model. The `make_transactions_on_dates` function does what it sounds like it does: defines for the model a specified deposit (positive value) or a specified withdrawal (negative value). Within the simulation, transactions are applied at the end of the years given. So this transaction path just makes a $1000 deposit at the end of each year.
 
-```{r}
+```{r transactions}
 trans <- make_transactions_on_dates(rep(1000, length(dates)),
                                     dates)
 model <- make_model(port, alloc, trans, dates)
@@ -95,13 +95,13 @@ model <- make_model(port, alloc, trans, dates)
 
 Lastly, we evaluate `make_path` on the model to run the simulation.
 
-```{r}
+```{r path}
 path <- make_path(model)
 c(head(path), tail(path))
 ```
 
 
-```{r, fig.dim = c(7, 5), fig.keep = "last"}
+```{r results, fig.dim = c(7, 5), fig.keep = "last"}
 plot(path[,1:3],
      col = c("red", "blue", "green"),
      main = "Investment Path")
