@@ -29,32 +29,8 @@ See the vignette *Basic Usage* for more detail.
 
 ``` r
 library(tidyverse)
-#> ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──
-#> ✔ ggplot2 3.2.1     ✔ purrr   0.3.2
-#> ✔ tibble  2.1.3     ✔ dplyr   0.8.3
-#> ✔ tidyr   0.8.3     ✔ stringr 1.4.0
-#> ✔ readr   1.3.1     ✔ forcats 0.4.0
-#> ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
-#> ✖ dplyr::filter() masks stats::filter()
-#> ✖ dplyr::lag()    masks stats::lag()
 library(xts)
-#> Loading required package: zoo
-#> 
-#> Attaching package: 'zoo'
-#> The following objects are masked from 'package:base':
-#> 
-#>     as.Date, as.Date.numeric
-#> 
-#> Attaching package: 'xts'
-#> The following objects are masked from 'package:dplyr':
-#> 
-#>     first, last
 library(lubridate)
-#> 
-#> Attaching package: 'lubridate'
-#> The following object is masked from 'package:base':
-#> 
-#>     date
 library(investmentsim)
 
 # Time series of returns
@@ -82,10 +58,34 @@ port <- make_portfolio(asset_names,
                          simbond_asset),
                          c(2500, 2500))
 alloc <- make_linear_allocation_path(asset_names,
-                                    c(ymd("1990-01-01"),
-                                      ymd("2015-01-01")),
+                                    c(ymd("1970-01-01"),
+                                      ymd("2000-01-01")),
                                     list(c(0.9, 0.1),
                                          c(0.4, 0.6)))
+# Plot the allocation path
+as <- map(dates,
+          alloc) %>%
+    do.call(rbind, .) %>%
+    xts(order.by = dates)
+plot(as, ylim = c(0, 1),
+     col = c("red", "blue"),
+     main = "Asset Allocation")
+```
+
+<img src="man/figures/README-example-1.png" width="100%" />
+
+``` r
+addLegend("topright",
+          asset_names,
+          col = c("red", "blue"),
+          lty = 1, cex = 1,
+          bty = "o")
+```
+
+<img src="man/figures/README-example-2.png" width="100%" />
+
+``` r
+
 trans <- make_transactions_on_dates(rep(1000, length(dates)),
                                     dates)
 model <- make_model(port, alloc, trans, dates)
@@ -100,18 +100,18 @@ print(c(head(path), tail(path)))
 #> 1943-01-01     7997.775 8.886416e+02     8886.416        1000
 #> 1944-01-01    11848.487 1.316499e+03    13164.986        1000
 #> 1945-01-01    13939.015 1.548779e+03    15487.794        1000
-#> 2005-01-01 14606807.800 9.738761e+06 24345568.418        1000
-#> 2006-01-01 17022883.035 1.232736e+07 29350241.694        1000
-#> 2007-01-01 18928322.880 1.487199e+07 33800312.163        1000
-#> 2008-01-01 20473005.004 1.743874e+07 37911742.014        1000
-#> 2009-01-01 20536683.085 1.895877e+07 39495451.305        1000
-#> 2010-01-01 24289591.205 2.429066e+07 48580246.483        1000
+#> 2005-01-01 11137858.729 1.670679e+07 27844646.822        1000
+#> 2006-01-01 12831289.074 1.924693e+07 32078222.685        1000
+#> 2007-01-01 14673102.513 2.200965e+07 36682756.282        1000
+#> 2008-01-01 16844539.341 2.526681e+07 42111348.352        1000
+#> 2009-01-01 16949487.079 2.542423e+07 42373717.697        1000
+#> 2010-01-01 20340375.373 3.051056e+07 50850938.433        1000
 plot(path[,1:3],
     col = c("red", "blue", "green"),
     main = "Investment Path")
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
+<img src="man/figures/README-example-3.png" width="100%" />
 
 ``` r
 addLegend("topleft",
@@ -121,4 +121,4 @@ addLegend("topleft",
           bty = "o")
 ```
 
-<img src="man/figures/README-example-2.png" width="100%" />
+<img src="man/figures/README-example-4.png" width="100%" />
