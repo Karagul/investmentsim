@@ -19,14 +19,13 @@
 #'     as a percent change.
 #' @examples
 #' library(tidyverse)
-#' library(zoo)
+#' library(xts)
 #' library(lubridate)
 #' library(investmentsim)
 #'
-#' ## Create a model and financial path
-#' 
 #' # Time series of returns
 #' data(simreturns)
+#' head(simreturns)
 #' 
 #' # Historical assets
 #' simstock_asset <- make_historical(simreturns$Stock.Returns)
@@ -36,21 +35,31 @@
 #' 
 #' # Portfolio with S&P 500 and 10-year T-bonds. Yearly transaction
 #' # of $1000. Linear allocation.
-#' holdings <- c("Stocks", "Bonds")
-#' port <- make_portfolio(holdings,
+#' asset_names <- c("Stocks", "Bonds")
+#' port <- make_portfolio(asset_names,
 #'                        c(simstock_asset,
 #'                          simbond_asset),
-#'                          c(0,0))
-#' alloc <- make_linear_allocation_path(holdings,
-#'                                     c(ymd("1990-01-01"), ymd("2015-01-01")),
-#'                                     list(c(0.9, 0.1), c(0.4, 0.6)))
+#'                          c(2500, 2500))
+#' alloc <- make_linear_allocation_path(asset_names,
+#'                                     c(ymd("1990-01-01"),
+#'                                       ymd("2015-01-01")),
+#'                                     list(c(0.9, 0.1),
+#'                                          c(0.4, 0.6)))
 #' trans <- make_transactions_on_dates(rep(1000, length(dates)),
 #'                                     dates)
 #' model <- make_model(port, alloc, trans, dates)
+#'
 #' # Evaluate the model
 #' path <- make_path(model)
-#' print(path)
-#' plot(path)
+#' print(c(head(path), tail(path)))
+#' plot(path[,1:3],
+#'     col = c("red", "blue", "green"),
+#'     main = "Investment Path")
+#' addLegend("topleft",
+#'           c(asset_names, "Total"),
+#'           col = c("red", "blue", "green"),
+#'           lty = 1, cex = 1,
+#'           bty = "o")
 #' @importFrom magrittr %>%
 #' @export
 make_path <- function(model, nonneg=TRUE, verbose=FALSE) {
